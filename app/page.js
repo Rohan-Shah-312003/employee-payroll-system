@@ -2,120 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit, Trash2, DollarSign, Users, Calculator, Download, Database, Wifi, WifiOff } from 'lucide-react';
+import { createClient } from '@supabase/supabase-js'
 
-// Supabase client configuration
-const SUPABASE_URL = 'https://your-project.supabase.co';
-const SUPABASE_ANON_KEY = 'your-anon-key';
-
-// Mock Supabase client for demo purposes
-const createSupabaseClient = () => {
-  // In a real implementation, you would use: import { createClient } from '@supabase/supabase-js'
-  // const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-  
-  // Mock implementation for demo
-  let mockData = [
-    {
-      id: 1,
-      name: 'John Doe',
-      email: 'john.doe@company.com',
-      position: 'Senior Software Engineer',
-      department: 'Engineering',
-      hourly_rate: 75,
-      hours_worked: 40,
-      overtime_hours: 5,
-      bonus: 500,
-      deductions: 200,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      email: 'jane.smith@company.com',
-      position: 'Product Manager',
-      department: 'Product',
-      hourly_rate: 65,
-      hours_worked: 40,
-      overtime_hours: 2,
-      bonus: 300,
-      deductions: 150,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    },
-    {
-      id: 3,
-      name: 'Mike Johnson',
-      email: 'mike.johnson@company.com',
-      position: 'Frontend Developer',
-      department: 'Engineering',
-      hourly_rate: 55,
-      hours_worked: 38,
-      overtime_hours: 0,
-      bonus: 200,
-      deductions: 100,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    }
-  ];
-
-  return {
-    from: (table) => ({
-      select: (columns = '*') => ({
-        eq: (column, value) => ({
-          single: () => Promise.resolve({
-            data: mockData.find(item => item[column] === value) || null,
-            error: null
-          })
-        }),
-        then: (callback) => callback({
-          data: mockData,
-          error: null
-        })
-      }),
-      insert: (data) => ({
-        select: () => Promise.resolve({
-          data: [{ ...data, id: Math.max(...mockData.map(d => d.id)) + 1, created_at: new Date().toISOString(), updated_at: new Date().toISOString() }],
-          error: null
-        })
-      }),
-      update: (data) => ({
-        eq: (column, value) => ({
-          select: () => {
-            const index = mockData.findIndex(item => item[column] === value);
-            if (index !== -1) {
-              mockData[index] = { ...mockData[index], ...data, updated_at: new Date().toISOString() };
-              return Promise.resolve({
-                data: [mockData[index]],
-                error: null
-              });
-            }
-            return Promise.resolve({ data: null, error: { message: 'Record not found' } });
-          }
-        })
-      }),
-      delete: () => ({
-        eq: (column, value) => {
-          const index = mockData.findIndex(item => item[column] === value);
-          if (index !== -1) {
-            const deleted = mockData.splice(index, 1);
-            return Promise.resolve({
-              data: deleted,
-              error: null
-            });
-          }
-          return Promise.resolve({ data: null, error: { message: 'Record not found' } });
-        }
-      })
-    }),
-    channel: (name) => ({
-      on: (event, table, callback) => ({
-        subscribe: () => ({
-          unsubscribe: () => {}
-        })
-      })
-    })
-  };
-};
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+)
 
 export default function Home() {
   const [employees, setEmployees] = useState([]);
@@ -137,7 +29,10 @@ export default function Home() {
     deductions: 0
   });
 
-  const supabase = createSupabaseClient();
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
 
   // Load employees from Supabase
   const loadEmployees = async () => {
