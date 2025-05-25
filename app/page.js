@@ -2,20 +2,20 @@
 
 import React, { useState } from 'react';
 import { Users, DollarSign, TrendingUp, Download, Plus } from 'lucide-react';
-import { useEmployees } from '../hooks/useEmployees';
-import { calculatePay, getTotalPayroll } from '../utils/payrollCalculations';
-import { exportPayrollToPDF } from '../utils/exportUtils';
+import { useEmployees } from './hooks/useEmployees';
+import { calculatePay, getTotalPayroll } from './utils/payrollCalculations';
+import { exportPayrollToPDF } from './utils/exportUtils';
 
 // Import all components
-import { LoadingSpinner } from '../components/common/LoadingSpinner';
-import { ErrorAlert } from '../components/common/ErrorAlert';
-import { Header } from '../components/layout/Header';
-import { Navigation } from '../components/layout/Navigation';
-import { StatsCard } from '../components/dashboard/StatsCard';
-import { PayrollTable } from '../components/dashboard/PayrollTable';
-import { EmployeeCard } from '../components/employees/EmployeeCard';
-import { EmployeeModal } from '../components/employees/EmployeeModal';
-import { DetailedPayrollTable } from '../components/payroll/DetailedPayrollTable';
+import { LoadingSpinner } from './components/common/LoadingSpinner';
+import { ErrorAlert } from './components/common/ErrorAlert';
+import { Header } from './components/layout/Header';
+import { Navigation } from './components/layout/Navigation';
+import { StatsCard } from './components/dashboard/StatsCard';
+import { PayrollTable } from './components/dashboard/PayrollTable';
+import { EmployeeCard } from './components/employees/EmployeeCard';
+import { EmployeeModal } from './components/employees/EmployeeModal';
+import { DetailedPayrollTable } from './components/payroll/DetailedPayrollTable';
 
 export default function Home() {
   const {
