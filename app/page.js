@@ -7,7 +7,7 @@ import { calculatePay, getTotalPayroll } from './utils/payrollCalculations';
 import { exportPayrollToPDF } from './utils/exportUtils';
 
 // Import all components
-import { LoadingSpinner } from './components/common/LoadingSpinner';
+import { LoadingSpinner } from './components/common/loadingSpinner';
 import { ErrorAlert } from './components/common/ErrorAlert';
 import { Header } from './components/layout/Header';
 import { Navigation } from './components/layout/Navigation';
